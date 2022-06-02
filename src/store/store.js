@@ -25,8 +25,8 @@ import {
 const storage = getStorage();
 
 // Collections
-const SubjectCollection = collection(db, "Subjects");
-const CourseCollection = collection(db, "Courses");
+export const SubjectCollection = collection(db, "Subjects");
+export const CourseCollection = collection(db, "Courses");
 const StudentCollection = collection(db, "Student");
 // Store
 const store = createStore({
@@ -110,22 +110,6 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     store.commit("setUser", user);
   }
-});
-
-onSnapshot(SubjectCollection, (snapshot) => {
-  let subjectList = [];
-  snapshot.forEach((doc) => {
-    subjectList.push({ ...doc.data(), id: doc.id });
-  });
-  store.commit("setSubjects", subjectList);
-});
-
-onSnapshot(CourseCollection, (snapshot) => {
-  let CoursesList = [];
-  snapshot.forEach((doc) => {
-    CoursesList.push({ ...doc.data(), id: doc.id });
-  });
-  store.commit("setCourses", CoursesList);
 });
 
 export default store;

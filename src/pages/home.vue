@@ -43,8 +43,31 @@ import LogoImage from "../components/LogoImage.vue";
 import ListItem from "../components/ListItem.vue";
 import userProfile from "../components/userProfile.vue";
 import { useStore } from "vuex";
+import { onSnapshot } from "firebase/firestore";
+import { SubjectCollection, CourseCollection } from "../store/store";
 
 const store = useStore();
+
+if (store.getters.getUser) {
+  onSnapshot(SubjectCollection, (snapshot) => {
+    let subjectList = [];
+    snapshot.forEach((doc) => {
+      subjectList.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(subjectList);
+    store.commit("setSubjects", subjectList);
+  });
+
+  onSnapshot(CourseCollection, (snapshot) => {
+    let CoursesList = [];
+    snapshot.forEach((doc) => {
+      CoursesList.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(CoursesList);
+    store.commit("setCourses", CoursesList);
+  });
+}
+
 const user = store.getters.getUser;
 const listDatas = [
   {

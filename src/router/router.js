@@ -1,7 +1,10 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/home.vue";
-import subjects from "../pages/subjects.vue";
+import Subjects from "../pages/subjects.vue";
+import Courses from "../pages/courses.vue";
+import Result from "../pages/result.vue";
+import Login from "../pages/login.vue";
 
 const routes = [
   {
@@ -12,17 +15,17 @@ const routes = [
       {
         path: "/d/courses",
         name: "Courses",
-        component: () => import("../pages/courses.vue"),
+        component: Courses,
       },
       {
         path: "/d/subjects",
         name: "Subjects",
-        component: () => import("../pages/subjects.vue"),
+        component: Subjects,
       },
       {
         path: "/d/result",
         name: "Result",
-        component: () => import("../pages/result.vue"),
+        component: Result,
       },
       {
         path: "/d/settings",
@@ -37,7 +40,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../pages/login.vue"),
+    component: Login,
   },
   {
     path: "/forgot",
@@ -76,9 +79,7 @@ router.beforeEach(async (to, from, next) => {
     if (await getCurrentUser()) {
       next();
     } else {
-      next({
-        name: "Login",
-      });
+      next("/login");
     }
   } else {
     next();
