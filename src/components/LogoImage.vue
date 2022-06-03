@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex justify-center items-center">
     <img
-      src="../assets/images/logo.png"
+      src="https://ik.imagekit.io/geduCDN/logo_1EnEXNz4V.png?ik-sdk-version=javascript-1.4.3&updatedAt=1654276225744"
       alt="logo"
       class="w-44 opacity-90"
     />

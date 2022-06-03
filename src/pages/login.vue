@@ -8,7 +8,7 @@
     >
       <div class="w-full flex justify-center items-center pt-6 pb-10">
         <img
-          src="../assets/images/logo.png"
+          src="https://ik.imagekit.io/geduCDN/logo_1EnEXNz4V.png?ik-sdk-version=javascript-1.4.3&updatedAt=1654276225744"
           alt="golden education logo"
           class="w-44"
         />
@@ -111,6 +111,4 @@ const signin = async () => {
     }, 3000);
   }
 };
-
-
 </script>
