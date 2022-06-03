@@ -5,6 +5,9 @@ import Subjects from "../pages/subjects.vue";
 import Courses from "../pages/courses.vue";
 import Result from "../pages/result.vue";
 import Login from "../pages/login.vue";
+import Students from "../pages/students.vue";
+import Studentview from "../pages/studentview.vue";
+import Studentedit from "../pages/studentedit.vue";
 
 const routes = [
   {
@@ -26,6 +29,21 @@ const routes = [
         path: "/d/result",
         name: "Result",
         component: Result,
+      },
+      {
+        path: "/d/students",
+        name: "Students",
+        component: Students,
+      },
+      {
+        path: "/d/student/:id",
+        name: "Studentview",
+        component: Studentview,
+      },
+      {
+        path: "/d/student/edit/:id",
+        name: "Studentedit",
+        component: Studentedit,
       },
       {
         path: "/d/settings",

@@ -6,7 +6,7 @@
       <div class="h-24 flex items-center justify-between px-5 mdb:pb-5">
         <h2 class="text-2xl md:text-4xl">Upload Result</h2>
       </div>
-      <form @submit.prevent="submitStudentResult()" class="px-5">
+      <form @submit.prevent="updateStudentAndResult()" class="px-5">
         <div class="w-full py-5">
           <!-- Registration -->
           <div class="pb-7">
@@ -473,7 +473,11 @@
                 ></i>
               </div>
               <div>
-                <p class="text-lg">{{ isError ? 'Result not upload' : 'Result upload successfully' }}</p>
+                <p class="text-lg">
+                  {{
+                    isError ? "Result not update" : "Result update successfully"
+                  }}
+                </p>
               </div>
             </div>
           </Teleport>
@@ -486,14 +490,17 @@
 <script setup>
 import { States, Durations } from "../constList";
 import { useStore } from "vuex";
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onBeforeMount, onMounted, reactive, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { db } from "../firebase/config";
+import { getDoc, doc } from "firebase/firestore";
 
 const store = useStore();
-const open = ref(null);
-const isError = ref(false);
-const Courses = computed(() => store.getters.getCourses);
-const Subjects = computed(() => store.getters.getSubjects);
+const router = useRouter();
+const route = useRoute(router);
+const studentID = route.params.id;
 
+store.dispatch("getStudentDetail", studentID);
 const data = reactive({
   regno: "",
   certno: "",
@@ -505,7 +512,7 @@ const data = reactive({
       originalURL: "",
     },
     name: "",
-    gender: "Male",
+    gender: "",
     dob: "",
     fatherName: "",
     motherName: "",
@@ -514,21 +521,42 @@ const data = reactive({
     street: "",
     city: "",
     pinCode: "",
-    state: "Punjab",
+    state: "",
   },
   course: {
     name: "",
     duration: "",
   },
-  result: [
-    {
-      subject: "",
-      obtain: 0,
-      min: 0,
-      max: 0,
-    },
-  ],
+  result: [],
 });
+
+onMounted(async () => {
+  const result = await getDoc(doc(db, "Student", route.params.id));
+  const student = result.data();
+  data.regno = student.regno;
+  data.certno = student.certno;
+  data.session = student.session;
+  data.phonenumber = student.phonenumber;
+  data.profile.Img.cdnURL = student.profile.Img.cdnURL;
+  data.profile.Img.originalURL = student.profile.Img.originalURL;
+  data.profile.name = student.profile.name;
+  data.profile.gender = student.profile.gender;
+  data.profile.dob = student.profile.dob;
+  data.profile.fatherName = student.profile.fatherName;
+  data.profile.motherName = student.profile.motherName;
+  data.address.street = student.address.street;
+  data.address.city = student.address.city;
+  data.address.pinCode = student.address.pinCode;
+  data.address.state = student.address.state;
+  data.course.name = student.course.name;
+  data.course.duration = student.course.duration;
+  data.result = student.result;
+});
+
+const open = ref(null);
+const isError = ref(false);
+const Courses = computed(() => store.getters.getCourses);
+const Subjects = computed(() => store.getters.getSubjects);
 
 const addRow = () => {
   data.result.push({
@@ -550,18 +578,17 @@ const selectedFile = async (event) => {
     "https://ik.imagekit.io/geduCDN/"
   );
   data.profile.Img.cdnURL = cdnURL;
-  console.log("Original URL : ", data.profile.Img.originalURL);
-  console.log("CDN URL : ", data.profile.Img.cdnURL);
 };
-const submitStudentResult = async () => {
+const updateStudentAndResult = async () => {
   try {
-    await store.dispatch("addResult", data);
+    await store.dispatch("updateStudentDetail", { studentID, data });
     open.value = true;
     isError.value = false;
     setTimeout(() => {
       open.value = false;
     }, 3000);
   } catch (error) {
+    open.value = true;
     console.log(error);
     isError.value = true;
     setTimeout(() => {

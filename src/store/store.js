@@ -9,25 +9,33 @@ import {
 } from "firebase/auth";
 
 import {
-  addDoc,
-  collection,
-  onSnapshot,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-
-import {
   getDownloadURL,
   getStorage,
   ref as strRef,
   uploadBytes,
 } from "firebase/storage";
-const storage = getStorage();
 
+import {
+  addDoc,
+  collection,
+  doc,
+  deleteDoc,
+  getDocs,
+  query,
+  limit,
+  startAt,
+  startAfter,
+  orderBy,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
+
+const storage = getStorage();
+let lastDoc = null;
 // Collections
 export const SubjectCollection = collection(db, "Subjects");
 export const CourseCollection = collection(db, "Courses");
-const StudentCollection = collection(db, "Student");
+export const StudentCollection = collection(db, "Student");
 // Store
 const store = createStore({
   state() {
@@ -36,19 +44,29 @@ const store = createStore({
       isLogin: null,
       subjects: null,
       courses: null,
+      students: [],
+      studentDeatil: null,
     };
   },
 
   mutations: {
     setUser(state, payload) {
       state.user = payload;
-      console.log("State User", state.user);
     },
     setSubjects(state, payload) {
       state.subjects = payload;
     },
     setCourses(state, payload) {
       state.courses = payload;
+    },
+    setStudent(state, payload) {
+      state.students.push(payload);
+    },
+    setSingleStudent(state, payload) {
+      state.studentDeatil = payload;
+    },
+    clearArray(state) {
+      state.students = [];
     },
   },
 
@@ -65,11 +83,13 @@ const store = createStore({
     },
     async resetpassword(context, email) {
       await sendPasswordResetEmail(auth, email);
-      console.log("Send");
     },
     async signout(context) {
       await signOut(auth);
       context.commit("setUser", null);
+      context.commit("setSubjects", null);
+      context.commit("setCourses", null);
+      context.commit("clearArray");
     },
     async addSubject(context, name) {
       await addDoc(SubjectCollection, { name });
@@ -97,12 +117,44 @@ const store = createStore({
     async addResult(context, data) {
       await addDoc(StudentCollection, data);
     },
+    async getAllStudents(context) {
+      const ref = query(StudentCollection, orderBy("certno"), limit(2));
+      const data = await getDocs(ref);
+      data.forEach((doc) => {
+        context.commit("setStudent", { id: doc.id, ...doc.data() });
+      });
+
+      lastDoc = data.docs[data.docs.length - 1];
+    },
+    async nextStudents(context) {
+      const ref = query(
+        StudentCollection,
+        orderBy("certno"),
+        startAfter(lastDoc),
+        limit(2)
+      );
+      const data = await getDocs(ref);
+      data.forEach((doc) => {
+        context.commit("setStudent", { id: doc.id, ...doc.data() });
+      });
+
+      lastDoc = data.docs[data.docs.length - 1];
+    },
+    async getStudentDetail(context, id) {
+      const student = await getDoc(doc(db, "Student", id));
+      context.commit("setSingleStudent", student.data());
+    },
+    async updateStudentDetail(context, item) {
+      await updateDoc(doc(StudentCollection, item.studentID), item.data);
+    },
   },
   getters: {
     getUser: (state) => state.user,
     isLogin: (state) => state.isLogin,
     getSubjects: (state) => state.subjects,
     getCourses: (state) => state.courses,
+    getStudents: (state) => state.students,
+    getStudentDetail: (state) => state.studentDeatil,
   },
 });
 

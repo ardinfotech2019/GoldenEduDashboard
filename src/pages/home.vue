@@ -28,7 +28,7 @@
 
     <!-- Main part or contect section -->
     <main
-      class="md:w-[80%] md:px-6 md:py-6 overflow-y-auto md:h-screen"
+      class="md:w-[80%] md:px-4 md:py-4 overflow-y-auto md:h-screen"
       id="main"
     >
       <router-view></router-view>
@@ -45,6 +45,7 @@ import userProfile from "../components/userProfile.vue";
 import { useStore } from "vuex";
 import { onSnapshot } from "firebase/firestore";
 import { SubjectCollection, CourseCollection } from "../store/store";
+import { onMounted } from "vue";
 
 const store = useStore();
 
@@ -54,7 +55,6 @@ if (store.getters.getUser) {
     snapshot.forEach((doc) => {
       subjectList.push({ ...doc.data(), id: doc.id });
     });
-    console.log(subjectList);
     store.commit("setSubjects", subjectList);
   });
 
@@ -63,60 +63,13 @@ if (store.getters.getUser) {
     snapshot.forEach((doc) => {
       CoursesList.push({ ...doc.data(), id: doc.id });
     });
-    console.log(CoursesList);
     store.commit("setCourses", CoursesList);
   });
 }
 
 const user = store.getters.getUser;
-const listDatas = [
-  {
-    id: 0,
-    name: "Home",
-    icon: "fa-house",
-    path: "/",
-  },
-  {
-    id: 1,
-    name: "Subjects",
-    icon: "fa-books",
-    path: "/d/subjects",
-  },
-  {
-    id: 2,
-    name: "Courses",
-    icon: "fa-graduation-cap",
-    path: "/d/courses",
-  },
-  {
-    id: 3,
-    name: "Result",
-    icon: "fa-cloud-arrow-up",
-    path: "/d/result",
-  },
-  {
-    id: 4,
-    name: "Students",
-    icon: "fa-screen-users",
-    path: "/students",
-  },
-  {
-    id: 5,
-    name: "Add User",
-    icon: "fa-user-plus",
-    path: "/addusers",
-  },
-  {
-    id: 6,
-    name: "Location",
-    icon: "fa-location-crosshairs",
-    path: "/location",
-  },
-  {
-    id: 7,
-    name: "Settings",
-    icon: "fa-gears",
-    path: "/settings",
-  },
-];
+
+onMounted(() => {
+  store.dispatch("getAllStudents");
+});
 </script>
