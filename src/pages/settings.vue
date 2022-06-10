@@ -6,7 +6,7 @@
       <div class="h-24 flex items-center justify-between px-5 pb-5">
         <h2 class="text-4xl">Settings</h2>
       </div>
-      <div class="grid grid-cols-2 md:divide-x-2 divide-gray-700">
+      <div class="grid grid-cols-1 md:grid-cols-2 md:divide-x-2 divide-gray-700">
         <div class="flex justify-center">
           <form class="bg-gray-900 p-5" @submit.prevent="updateProfile()">
             <div class="px-3 py-6">

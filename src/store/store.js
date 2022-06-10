@@ -131,7 +131,7 @@ const store = createStore({
       });
     },
     async getAllStudents(context) {
-      const ref = query(StudentCollection, orderBy("certno"), limit(2));
+      const ref = query(StudentCollection, orderBy("certno"), limit(6));
       const data = await getDocs(ref);
       data.forEach((doc) => {
         context.commit("setStudent", { id: doc.id, ...doc.data() });
@@ -144,7 +144,7 @@ const store = createStore({
         StudentCollection,
         orderBy("certno"),
         startAfter(lastDoc),
-        limit(2)
+        limit(6)
       );
       const data = await getDocs(ref);
       data.forEach((doc) => {
