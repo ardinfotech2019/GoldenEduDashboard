@@ -500,7 +500,7 @@ const router = useRouter();
 const route = useRoute(router);
 const studentID = route.params.id;
 
-store.dispatch("getStudentDetail", studentID);
+// store.dispatch("getStudentDetail", studentID);
 const data = reactive({
   regno: "",
   certno: "",

@@ -46,6 +46,11 @@ const routes = [
         component: () => import("../pages/studentedit.vue"),
       },
       {
+        path: "/d/location",
+        name: "Location",
+        component: () => import("../pages/location.vue"),
+      },
+      {
         path: "/d/settings",
         name: "Settings",
         component: () => import("../pages/settings.vue"),

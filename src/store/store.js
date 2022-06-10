@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   updateProfile,
+  updatePassword,
 } from "firebase/auth";
 
 import {
@@ -28,6 +29,7 @@ import {
   orderBy,
   updateDoc,
   getDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 const storage = getStorage();
@@ -52,6 +54,9 @@ const store = createStore({
   mutations: {
     setUser(state, payload) {
       state.user = payload;
+    },
+    updateUser(state, payload) {
+      state.user.displayName = payload;
     },
     setSubjects(state, payload) {
       state.subjects = payload;
@@ -84,6 +89,9 @@ const store = createStore({
     async resetpassword(context, email) {
       await sendPasswordResetEmail(auth, email);
     },
+    async changePassword(context, password) {
+      await updatePassword(auth.currentUser, password);
+    },
     async signout(context) {
       await signOut(auth);
       context.commit("setUser", null);
@@ -103,19 +111,24 @@ const store = createStore({
     async deleteCourse(context, id) {
       await deleteDoc(doc(CourseCollection, id));
     },
-    async updatePrfile(context) {
+    async updateUserProfile(context, name) {
       await updateProfile(auth.currentUser, {
-        displayName: "Daman",
+        displayName: name,
       });
+      context.commit("updateUser", name);
     },
     async uploadProfile(context, file) {
       const storageRef = strRef(storage, "profile/" + file.name);
-      await uploadBytes(storageRef);
+      await uploadBytes(storageRef, file);
       const link = await getDownloadURL(storageRef);
       return link;
     },
     async addResult(context, data) {
-      await addDoc(StudentCollection, data);
+      await addDoc(StudentCollection, {
+        ...data,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
     },
     async getAllStudents(context) {
       const ref = query(StudentCollection, orderBy("certno"), limit(2));
@@ -143,9 +156,16 @@ const store = createStore({
     async getStudentDetail(context, id) {
       const student = await getDoc(doc(db, "Student", id));
       context.commit("setSingleStudent", student.data());
+      return student.data();
     },
     async updateStudentDetail(context, item) {
-      await updateDoc(doc(StudentCollection, item.studentID), item.data);
+      await updateDoc(doc(StudentCollection, item.studentID), {
+        ...item.data,
+        updatedAt: serverTimestamp(),
+      });
+    },
+    async deleteStudent(context, id) {
+      await deleteDoc(doc(StudentCollection, id));
     },
   },
   getters: {

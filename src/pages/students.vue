@@ -5,34 +5,7 @@
     >
       <div class="h-24 flex items-center justify-between px-5 pb-5">
         <h2 class="text-4xl">Students</h2>
-        <div class="flex relative w-80 h-10">
-          <input
-            type="text"
-            name="subjects"
-            autofocus
-            required
-            placeholder="Enter CertID"
-            id="subjects"
-            :class="[
-              'bg-gray-900 w-full px-3 border-none outline-none rounded ring-2 ring-gray-700 focus:shadow-lg focus:shadow-amber-400/10',
-              error.isError ? ' disabled:ring-red-400' : 'focus:ring-[#e6c34f]',
-            ]"
-            v-model="studentID"
-            :disabled="error.isError"
-            v-on:keyup.enter="searchStudent"
-          />
-          <p
-            v-if="error.isError"
-            class="absolute -bottom-6 text-sm text-red-400"
-          >
-            {{ error.msg }}
-          </p>
-          <span
-            class="bg-gray-900 absolute flex justify-center items-center right-0 top-0 bottom-0 px-4"
-          >
-            <i class="fa-duotone fa-turn-down-left"></i>
-          </span>
-        </div>
+
       </div>
       <table
         class="text-sm w-full text-left text-gray-100 ring-1 ring-gray-700 rounded table-auto"
@@ -100,13 +73,12 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue";
+import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { onSnapshot } from "firebase/firestore";
 
 const store = useStore();
 
-const studentID = ref("");
 const error = reactive({
   isError: false,
   message: "",
