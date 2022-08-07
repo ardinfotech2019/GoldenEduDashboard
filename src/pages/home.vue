@@ -11,8 +11,8 @@
           :icon="listData.icon"
           :path="listData.path"
         /> -->
-        <ListItem name="Home" icon="fa-house" path="/" />
-        <ListItem name="Subjects" icon="fa-books" path="/d/subjects" />
+        <!-- <ListItem name="Home" icon="fa-house" path="/" /> -->
+        <ListItem name="Subjects" icon="fa-books" path="/" />
         <ListItem name="Courses" icon="fa-graduation-cap" path="/d/courses" />
         <ListItem name="Result" icon="fa-cloud-arrow-up" path="/d/result" />
         <ListItem name="Students" icon="fa-screen-users" path="/d/students" />
@@ -44,26 +44,20 @@ import ListItem from "../components/ListItem.vue";
 import userProfile from "../components/userProfile.vue";
 import { useStore } from "vuex";
 import { onSnapshot } from "firebase/firestore";
-import { SubjectCollection, CourseCollection } from "../store/store";
+import { CoursesAndSubjects } from "../store/store";
 import { onMounted } from "vue";
 
 const store = useStore();
 
 if (store.getters.getUser) {
-  onSnapshot(SubjectCollection, (snapshot) => {
-    let subjectList = [];
+  onSnapshot(CoursesAndSubjects, (snapshot) => {
+    let data = [];
     snapshot.forEach((doc) => {
-      subjectList.push({ ...doc.data(), id: doc.id });
+      data.push({ ...doc.data(), id: doc.id });
     });
-    store.commit("setSubjects", subjectList);
-  });
-
-  onSnapshot(CourseCollection, (snapshot) => {
-    let CoursesList = [];
-    snapshot.forEach((doc) => {
-      CoursesList.push({ ...doc.data(), id: doc.id });
-    });
-    store.commit("setCourses", CoursesList);
+    console.log(data[0]);
+    store.commit("setSubjects", data[0].Subjects);
+    store.commit("setCourses", data[0].Courses);
   });
 }
 

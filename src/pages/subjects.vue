@@ -51,17 +51,17 @@
 
         <tbody>
           <tr
-            class="text-base capitalize dark:bg-gray-800 dark:border-gray-700 text-left tracking-wide border-b-[0.5px] border-gray-800"
+            class="text-base dark:bg-gray-800 dark:border-gray-700 text-left tracking-wide border-b-[0.5px] border-gray-800"
             v-for="(subject, index) in subjects"
-            :key="subject.id"
+            :key="index"
           >
             <td class="px-6 py-4 text-left pl-10">{{ index + 1 }}</td>
-            <td class="px-6 py-4">{{ subject.name }}</td>
+            <td class="px-6 py-4">{{ subject }}</td>
             <td class="px-6 py-4 text-right">
               <a
                 href="#"
                 class="font-medium flex gap-2 justify-center items-center text-red-400 hover:text-red-500 hover:no-underline"
-                @click="deleteSubject(subject.id)"
+                @click="deleteSubject(subject)"
                 ><i class="fa-duotone fa-trash-can"></i>
                 <span class="tracking-wide">Delete</span></a
               >
@@ -94,7 +94,7 @@ const subjects = computed(() => store.getters.getSubjects);
 
 const addSubject = () => {
   if (subject.value != "") {
-    store.dispatch("addSubject", subject.value.toLowerCase());
+    store.dispatch("addSubject", subject.value);
     subject.value = "";
   } else {
     error.isError = true;
@@ -104,7 +104,7 @@ const addSubject = () => {
   }
 };
 
-const deleteSubject = async (id) => {
-  await store.dispatch("deleteSubject", id);
+const deleteSubject = async (subjectName) => {
+  await store.dispatch("deleteSubject", subjectName);
 };
 </script>

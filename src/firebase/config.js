@@ -2,15 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-
-
 const config = {
-  apiKey: "AIzaSyC0fOzFPCM0GZbius_EB3gTBw7mnbKi3r8",
-  authDomain: "goldeneducation-55fba.firebaseapp.com",
-  projectId: "goldeneducation-55fba",
-  storageBucket: "goldeneducation-55fba.appspot.com",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
   messagingSenderId: "42474840049",
-  appId: "1:42474840049:web:e91924a9567b7225ec6e50",
+  appId: import.meta.env.VITE_APP_ID,
   measurementId: "G-ZKNL3PH0WC",
 };
 

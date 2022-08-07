@@ -8,9 +8,9 @@
     >
       <div class="w-full flex justify-center items-center pt-6 pb-10">
         <img
-          src="../assets/images/logo.png"
+          src="https://ik.imagekit.io/geduCDN/new_logo_min_TP97CGATk4.png"
           alt="golden education logo"
-          class="w-44"
+          class="w-36"
         />
       </div>
 

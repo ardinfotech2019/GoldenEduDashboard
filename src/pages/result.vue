@@ -69,7 +69,7 @@
                     type="text"
                     id="phone"
                     class="w-full h-full outline-none border-none bg-gray-800 text-gray-400 ring-2 ring-gray-700 focus:ring-[#e6c34f] rounded px-3"
-                    placeholder="APR.2022-MAY.2022"
+                    placeholder="00000*****"
                     autofocus
                     required
                     v-model="data.phonenumber"
@@ -276,10 +276,10 @@
                   >
                     <option
                       v-for="course in Courses"
-                      :value="course.name"
+                      :value="course"
                       class="capitalize"
                     >
-                      {{ course.name }}
+                      {{ course }}
                     </option>
                   </select>
                 </div>
@@ -352,10 +352,10 @@
                             >
                               <option
                                 v-for="subject in Subjects"
-                                :value="subject.name"
+                                :value="subject"
                                 class="capitalize"
                               >
-                                {{ subject.name }}
+                                {{ subject }}
                               </option>
                             </select>
                           </div>

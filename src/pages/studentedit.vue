@@ -274,12 +274,11 @@
                     class="w-full h-full outline-none border-none bg-gray-800 text-gray-400 ring-2 ring-gray-700 focus:ring-[#e6c34f] rounded px-3"
                     v-model="data.course.name"
                   >
-                    <option
-                      v-for="course in Courses"
-                      :value="course.name"
-                      class="capitalize"
-                    >
-                      {{ course.name }}
+                    <option selected>
+                      {{ data.course.name }}
+                    </option>
+                    <option v-for="course in Courses" :value="course">
+                      {{ course }}
                     </option>
                   </select>
                 </div>
@@ -295,6 +294,9 @@
                     class="w-full h-full outline-none border-none bg-gray-800 text-gray-400 ring-2 ring-gray-700 focus:ring-[#e6c34f] rounded px-3"
                     v-model="data.course.duration"
                   >
+                    <option selected class="capitalize">
+                      {{ data.course.duration }}
+                    </option>
                     <option
                       v-for="duration in Durations"
                       :value="duration"
@@ -323,7 +325,7 @@
                     class="text-xs text-gray-300 uppercase border-b border-gray-600 sticky"
                   >
                     <tr>
-                      <th scope="col" class="px-6 py-3">Course</th>
+                      <th scope="col" class="px-6 py-3">Subject</th>
                       <th scope="col" class="px-6 py-3">Marks</th>
                       <th scope="col" class="px-6 py-3">Minimum</th>
                       <th scope="col" class="px-6 py-3">Maximum</th>
@@ -345,17 +347,19 @@
                         <div class="pb-6 space-y-1.5 w-48 md:w-80">
                           <div class="h-11">
                             <select
-                              id="course"
-                              name="course"
+                              id="subject"
+                              name="subject"
                               class="w-full h-full outline-none border-none bg-gray-800 text-gray-400 ring-2 ring-gray-700 focus:ring-[#e6c34f] rounded px-3"
                               v-model="row.subject"
                             >
+                              <option selected>
+                                {{ row.subject }}
+                              </option>
                               <option
                                 v-for="subject in Subjects"
-                                :value="subject.name"
-                                class="capitalize"
+                                :value="subject"
                               >
-                                {{ subject.name }}
+                                {{ subject }}
                               </option>
                             </select>
                           </div>
@@ -441,14 +445,9 @@
                 type="submit"
                 class="w-full mb-7 md:mb-0 md:w-80 bg-[#e6c34f] hover:bg-amber-300 shadow-lg shadow-[#e6c34f]/20 text-gray-900 font-semibold border-none rounded py-2.5"
               >
-                Submit
+                Update
               </button>
-              <button
-                type="reset"
-                class="w-full mb-7 md:mb-0 md:w-80 bg-red-500 hover:bg-red-500 shadow-lg shadow-red-400/20 text-gray-100 font-semibold border-none rounded py-2.5"
-              >
-                Reset
-              </button>
+              
             </div>
           </div>
 

@@ -30,14 +30,22 @@ import {
   updateDoc,
   getDoc,
   serverTimestamp,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 const storage = getStorage();
 let lastDoc = null;
+
 // Collections
-export const SubjectCollection = collection(db, "Subjects");
+// export const SubjectCollection = collection(db, "Subjects");
+export const CoursesAndSubjects = collection(db, "data");
 export const CourseCollection = collection(db, "Courses");
 export const StudentCollection = collection(db, "Student");
+
+// Doc Refrence
+const CoursesAndSubjectsDoc = doc(CoursesAndSubjects, "E87FijbBsayCUfDyQlRJ");
+
 // Store
 const store = createStore({
   state() {
@@ -99,18 +107,38 @@ const store = createStore({
       context.commit("setCourses", null);
       context.commit("clearArray");
     },
-    async addSubject(context, name) {
-      await addDoc(SubjectCollection, { name });
+    async addSubject(context, SubjectName) {
+      await updateDoc(CoursesAndSubjectsDoc, {
+        Subjects: arrayUnion(SubjectName),
+      });
     },
-    async deleteSubject(context, id) {
-      await deleteDoc(doc(SubjectCollection, id));
+    async addCourse(context, CourseName) {
+      await updateDoc(CoursesAndSubjectsDoc, {
+        Courses: arrayUnion(CourseName),
+      });
     },
-    async addCourse(context, name) {
-      await addDoc(CourseCollection, { name });
+    async deleteSubject(context, SubjectName) {
+      await updateDoc(CoursesAndSubjectsDoc, {
+        Subjects: arrayRemove(SubjectName),
+      });
     },
-    async deleteCourse(context, id) {
-      await deleteDoc(doc(CourseCollection, id));
+    async deleteCourse(context, CourseName) {
+      await updateDoc(CoursesAndSubjectsDoc, {
+        Courses: arrayRemove(CourseName),
+      });
     },
+    // async addSubject(context, name) {
+    //   await addDoc(SubjectCollection, { name });
+    // },
+    // async deleteSubject(context, id) {
+    //   await deleteDoc(doc(SubjectCollection, id));
+    // },
+    // async addCourse(context, name) {
+    //   await addDoc(CourseCollection, { name });
+    // },
+    // async deleteCourse(context, id) {
+    //   await deleteDoc(doc(CourseCollection, id));
+    // },
     async updateUserProfile(context, name) {
       await updateProfile(auth.currentUser, {
         displayName: name,

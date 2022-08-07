@@ -51,17 +51,17 @@
 
         <tbody>
           <tr
-            class="text-base capitalize dark:bg-gray-800 dark:border-gray-700 text-left tracking-wide border-b-[0.5px] border-gray-800"
+            class="text-base dark:bg-gray-800 dark:border-gray-700 text-left tracking-wide border-b-[0.5px] border-gray-800"
             v-for="(course, index) in Courses"
             :key="course.id"
           >
             <td class="px-6 py-4 text-left pl-10">{{ index + 1 }}</td>
-            <td class="px-6 py-4">{{ course.name }}</td>
+            <td class="px-6 py-4">{{ course }}</td>
             <td class="px-6 py-4 text-right">
               <a
                 href="#"
                 class="font-medium flex gap-2 justify-center items-center text-red-400 hover:text-red-500 hover:no-underline"
-                @click="deleteCourse(course.id)"
+                @click="deleteCourse(course)"
                 ><i class="fa-duotone fa-trash-can"></i>
                 <span class="tracking-wide">Delete</span></a
               >
@@ -96,7 +96,7 @@ const Courses = computed(() => {
 
 const addCourse = async () => {
   if (course.value != "") {
-    await store.dispatch("addCourse", course.value.toLowerCase());
+    await store.dispatch("addCourse", course.value);
     course.value = "";
   } else {
     error.isError = true;
@@ -106,8 +106,7 @@ const addCourse = async () => {
   }
 };
 
-const deleteCourse = async (id) => {
-  await store.dispatch("deleteCourse", id);
+const deleteCourse = async (courseName) => {
+  await store.dispatch("deleteCourse", courseName);
 };
-
 </script>

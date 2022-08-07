@@ -1,9 +1,9 @@
 <template>
   <div class="w-full flex justify-center items-center">
     <img
-      src="https://ik.imagekit.io/geduCDN/logo_1EnEXNz4V.png?ik-sdk-version=javascript-1.4.3&updatedAt=1654276225744"
+      src="https://ik.imagekit.io/geduCDN/new_logo_min_TP97CGATk4.png"
       alt="logo"
-      class="w-44 opacity-90"
+      class="w-36 opacity-90"
     />
   </div>
   <hr
