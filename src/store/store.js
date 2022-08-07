@@ -42,10 +42,8 @@ let lastDoc = null;
 export const CoursesAndSubjects = collection(db, "data");
 export const CourseCollection = collection(db, "Courses");
 export const StudentCollection = collection(db, "Student");
-
 // Doc Refrence
 const CoursesAndSubjectsDoc = doc(CoursesAndSubjects, "E87FijbBsayCUfDyQlRJ");
-
 // Store
 const store = createStore({
   state() {
