@@ -18,32 +18,32 @@ const routes = [
       {
         path: "/d/courses",
         name: "Courses",
-        component: () => import("../pages/courses.vue"),
+        component: () => Courses,
       },
       {
         path: "/",
         name: "Subjects",
-        component: () => import("../pages/subjects.vue"),
+        component: () => Subjects,
       },
       {
         path: "/d/result",
         name: "Result",
-        component: () => import("../pages/result.vue"),
+        component: () => Result,
       },
       {
         path: "/d/students",
         name: "Students",
-        component: () => import("../pages/students.vue"),
+        component: () => Students,
       },
       {
         path: "/d/student/:id",
         name: "Studentview",
-        component: () => import("../pages/studentview.vue"),
+        component: () => Studentview,
       },
       {
         path: "/d/student/edit/:id",
         name: "Studentedit",
-        component: () => import("../pages/studentedit.vue"),
+        component: () => Studentedit,
       },
       {
         path: "/d/location",
@@ -63,12 +63,17 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../pages/login.vue"),
+    component: () => Login,
   },
   {
     path: "/forgot",
     name: "Forgot",
     component: () => import("../pages/forgot.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "home",
+    component: Home,
   },
 ];
 
