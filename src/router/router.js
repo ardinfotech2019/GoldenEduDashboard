@@ -70,11 +70,11 @@ const routes = [
     name: "Forgot",
     component: () => import("../pages/forgot.vue"),
   },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "home",
-    component: Home,
-  },
+  // {
+  //   path: "/:pathMatch(.*)*",
+  //   name: "home",
+  //   component: Home,
+  // },
 ];
 
 const router = createRouter({
