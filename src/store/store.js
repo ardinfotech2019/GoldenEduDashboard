@@ -127,18 +127,6 @@ const store = createStore({
         Courses: arrayRemove(CourseName),
       });
     },
-    // async addSubject(context, name) {
-    //   await addDoc(SubjectCollection, { name });
-    // },
-    // async deleteSubject(context, id) {
-    //   await deleteDoc(doc(SubjectCollection, id));
-    // },
-    // async addCourse(context, name) {
-    //   await addDoc(CourseCollection, { name });
-    // },
-    // async deleteCourse(context, id) {
-    //   await deleteDoc(doc(CourseCollection, id));
-    // },
     async updateUserProfile(context, name) {
       await updateProfile(auth.currentUser, {
         displayName: name,
