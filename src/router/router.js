@@ -73,6 +73,11 @@ const routes = [
     name: "Forgot",
     component: Forgot,
   },
+  {
+    path: "/*",
+    component: Home,
+  },
+
   // {
   //   path: "/:pathMatch(.*)*",
   //   name: "home",
