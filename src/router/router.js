@@ -1,6 +1,16 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/home.vue";
+import Login from "../pages/login.vue";
+import Subjects from "../pages/subjects.vue";
+import Courses from "../pages/courses.vue";
+import Result from "../pages/result.vue";
+import Students from "../pages/students.vue";
+import Studentview from "../pages/studentview.vue";
+import Studentedit from "../pages/c.vue";
+import Location from "../pages/location.vue";
+import Settings from "../pages/settings.vue";
+import Forgot from "../pages/forgot.vue";
 
 const routes = [
   {
@@ -56,7 +66,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: import("../pages/login.vue"),
+    component: Login,
   },
   {
     path: "/forgot",
@@ -67,6 +77,12 @@ const routes = [
     path: "/*",
     component: Home,
   },
+
+  // {
+  //   path: "/:pathMatch(.*)*",
+  //   name: "home",
+  //   component: Home,
+  // },
 ];
 
 const router = createRouter({
