@@ -21,29 +21,14 @@
                     type="text"
                     id="Regno"
                     class="w-full h-full outline-none border-none bg-gray-800 text-gray-400 ring-2 ring-gray-700 focus:ring-[#e6c34f] rounded px-3"
-                    placeholder="123456***"
+                    placeholder="GEC22****"
                     autofocus
                     required
                     v-model="data.regno"
                   />
                 </div>
               </div>
-              <div class="pb-6 space-y-1.5 w-full md:w-60">
-                <label for="certificateno" class="text-gray-400 text-sm"
-                  >Certificate No.</label
-                >
-                <div class="h-11">
-                  <input
-                    type="text"
-                    id="certificateno"
-                    class="w-full h-full outline-none border-none bg-gray-800 text-gray-400 ring-2 ring-gray-700 focus:ring-[#e6c34f] rounded px-3"
-                    placeholder="GEC22A****"
-                    autofocus
-                    required
-                    v-model="data.certno"
-                  />
-                </div>
-              </div>
+
               <div class="pb-6 space-y-1.5 w-full md:w-60">
                 <label for="session" class="text-gray-400 text-sm"
                   >Session</label
@@ -473,7 +458,11 @@
                 ></i>
               </div>
               <div>
-                <p class="text-lg">{{ isError ? 'Result not upload' : 'Result upload successfully' }}</p>
+                <p class="text-lg">
+                  {{
+                    isError ? "Result not upload" : "Result upload successfully"
+                  }}
+                </p>
               </div>
             </div>
           </Teleport>
@@ -496,7 +485,6 @@ const Subjects = computed(() => store.getters.getSubjects);
 
 const data = reactive({
   regno: "",
-  certno: "",
   session: "",
   phonenumber: "",
   profile: {

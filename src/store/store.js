@@ -80,7 +80,6 @@ const store = createStore({
       state.students = [];
     },
   },
-
   actions: {
     async signIn(context, data) {
       const user = await signInWithEmailAndPassword(

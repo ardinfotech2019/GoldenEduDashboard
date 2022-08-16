@@ -5,7 +5,6 @@
     >
       <div class="h-24 flex items-center justify-between px-5 pb-5">
         <h2 class="text-4xl">Students</h2>
-
       </div>
       <table
         class="text-sm w-full text-left text-gray-100 ring-1 ring-gray-700 rounded table-auto"
@@ -14,7 +13,7 @@
           class="text-xs text-gray-300 uppercase border-b border-gray-600 sticky"
         >
           <tr class="text-left text-sm tracking-wide">
-            <th scope="col" class="px-6 py-3">Cert No.</th>
+            <th scope="col" class="px-6 py-3">Reg No.</th>
             <th scope="col" class="px-6 py-3">Name</th>
             <th scope="col" class="px-6 py-3">Father name</th>
             <th scope="col" class="px-6 py-3">Course</th>
@@ -31,7 +30,7 @@
             v-for="(student, index) in students"
             :key="student.id"
           >
-            <td class="px-6 py-4">{{ student.certno }}</td>
+            <td class="px-6 py-4">{{ student.regno }}</td>
             <td class="px-6 py-4">{{ student.profile.name }}</td>
             <td class="px-6 py-4">{{ student.profile.fatherName }}</td>
             <td class="px-6 py-4">{{ student.course.name }}</td>
@@ -85,8 +84,6 @@ const error = reactive({
 });
 
 const students = computed(() => store.getters.getStudents);
-
-
 </script>
 
 <style lang="css" scoped></style>
